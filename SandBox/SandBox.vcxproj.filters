@@ -15,21 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\core.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\Application.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\EntryPoint.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Engine\Application.cpp">
+    <ClCompile Include="src\SanBoxApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
