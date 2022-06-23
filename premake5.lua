@@ -26,7 +26,8 @@ project "Engine"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/src"
 	}
 
 	filter "system:windows"
@@ -76,7 +77,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Engine/vendor/spdlog/include",
-		"Engine/src"
+		"Engine/src",
+		"%{prj.name}/src"
 	}
 
 	links
