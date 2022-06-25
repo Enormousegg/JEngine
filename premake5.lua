@@ -18,6 +18,9 @@ project "Engine"
 	targetdir("bin/" ..outputdir.."/%{prj.name}")
 	objdir("bin-int/" ..outputdir.."/%{prj.name}")
 
+	pchheader "egpch.h"
+	pchsource "Engine/src/egpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",
@@ -27,7 +30,19 @@ project "Engine"
 	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{prj.name}/vendor/GLFW/include"
+	}
+
+	libdirs
+	{
+		"%{prj.name}/vendor/GLFW/lib"
+	}
+
+	links
+	{	
+		"glfw3_mt",
+		"opengl32"
 	}
 
 	filter "system:windows"
@@ -50,14 +65,17 @@ project "Engine"
 
 	filter "configurations:Debug"
 		defines "EG_DEBUG"
+		buildoptions "/MDd"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "EG_Release"
+		buildoptions "/MD"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EG_Dist"
+		buildoptions "/MD"
 		optimize "on"
 
 project "Sandbox"
@@ -98,12 +116,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "EG_DEBUG"
+		buildoptions "/MDd"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "EG_Release"
+		buildoptions "/MD"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EG_Dist"
+		buildoptions "/MD"
 		optimize "on"

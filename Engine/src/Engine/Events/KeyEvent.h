@@ -1,8 +1,7 @@
 #pragma once
 
+#include "egpch.h"
 #include "Event.h"
-
-#include <sstream>
 
 namespace Engine {
 

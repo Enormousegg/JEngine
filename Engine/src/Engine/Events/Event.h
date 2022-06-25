@@ -1,9 +1,7 @@
 #pragma once
 
+#include "egpch.h"
 #include "Engine/core.h"
-
-#include <string>
-#include <functional>
 
 namespace Engine {
 
@@ -46,7 +44,8 @@ namespace Engine {
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
+		//inline bool GetHandled() { return m_Handled; }
+	//protected:
 		bool m_Handled = false;
 	};
 

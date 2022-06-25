@@ -8,8 +8,7 @@ int main(int argc, char** argv)
 {
 	Engine::Log::Init();
 	EG_CORE_WARN("Initialized Log!");
-	int a = 5;
-	EG_INFO("hello!,Var={0}",a);
+	EG_INFO("hello!");
 
 	auto app = Engine::CreateApplication();
 	app->run();
