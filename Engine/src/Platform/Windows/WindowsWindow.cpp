@@ -5,6 +5,8 @@
 #include "Engine/Events/KeyEvent.h"
 #include "Engine/Events/MouseEvent.h"
 
+#include "glad/glad.h"
+
 namespace Engine {
 	
 	static bool s_GLFWInitialized = false;
@@ -48,6 +50,8 @@ namespace Engine {
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);//显示窗口
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		EG_CORE_ASSERT(status, "Failed to initialize GLAD");
 		glfwSetWindowUserPointer(m_Window, &m_Data);//数据以指针的方式传给窗口，&转化为左值（地址）
 		SetVSync(true);
 
@@ -94,6 +98,13 @@ namespace Engine {
 						break;
 					}
 				}
+			});
+
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				KeyTypedEvent event(keycode);
+				data.EventCallback(event);
 			});
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)

@@ -1,5 +1,6 @@
 workspace "JEngine"
 	architecture "x64"
+	startproject "Sandbox"
 
 	configurations
 	{
@@ -10,10 +11,21 @@ workspace "JEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+--include directories relative to root folder
+IncludeDir = {}
+IncludeDir["GLFW"] = "Engine/vendor/GLFW/include"
+IncludeDir["Glad"] = "Engine/vendor/Glad/include"
+IncludeDir["Imgui"] = "Engine/vendor/Imgui"
+IncludeDir["glm"] = "Engine/vendor/glm"
+
+include "Engine/vendor/Glad"
+include "Engine/vendor/Imgui"
+
 project "Engine"
 	location "Engine"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir("bin/" ..outputdir.."/%{prj.name}")
 	objdir("bin-int/" ..outputdir.."/%{prj.name}")
@@ -24,64 +36,75 @@ project "Engine"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 
 	includedirs
 	{
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/GLFW/include"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.Imgui}",
+		"%{IncludeDir.glm}"
 	}
 
 	libdirs
 	{
-		"%{prj.name}/vendor/GLFW/lib"
+		"Engine/vendor/GLFW/lib"
 	}
 
 	links
 	{	
-		"glfw3_mt",
-		"opengl32"
+		"glfw3_mt.lib",
+		"Glad",
+		"Imgui",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "on"
 		systemversion "10.0.19041.0"
 
 		defines--预处理命令
 		{
 			"EG_PLATFORM_WINDOWS",
-			"EG_BUILD_DLL"
+			"EG_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		--生成的dll文件复制到Sandbox
 		postbuildcommands
 		{
-			--"{COPY} %{cfg.buildtarget.relpath} ../bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/Sandbox"
-			"{COPY} %{cfg.buildtarget.relpath} ../bin/"..outputdir.."/Sandbox"
+			"{COPY} %{cfg.buildtarget.relpath} \"../bin/"..outputdir.."/Sandbox/\""
+			--"{COPY} %{cfg.buildtarget.relpath} ../bin/"..outputdir.."/Sandbox"
 		}
 
 	filter "configurations:Debug"
 		defines "EG_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
+		--buildoptions "/MDd"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "EG_Release"
-		buildoptions "/MD"
+		runtime "Release"
+		--buildoptions "/MD"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EG_Dist"
-		buildoptions "/MD"
+		runtime "Release"
+		--buildoptions "/MD"
 		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleAPP"
 	language "C++"
+	staticruntime "off"
 
 	targetdir("bin/" ..outputdir.."/%{prj.name}")
 	objdir("bin-int/" ..outputdir.."/%{prj.name}")
@@ -96,7 +119,7 @@ project "Sandbox"
 	{
 		"Engine/vendor/spdlog/include",
 		"Engine/src",
-		"%{prj.name}/src"
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -106,7 +129,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "on"
 		systemversion "10.0.19041.0"
 
 		defines--预处理命令
@@ -116,15 +138,18 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "EG_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
+		--buildoptions "/MDd"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "EG_Release"
-		buildoptions "/MD"
+		runtime "Release"
+		--buildoptions "/MD"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "EG_Dist"
-		buildoptions "/MD"
+		runtime "Release"
+		--buildoptions "/MD"
 		optimize "on"

@@ -2,16 +2,20 @@
 
 #include "Application.h"
 #include "Events/ApplicationEvent.h"
-#include <glfw3.h>
+#include <glad/glad.h>
+
+#include "Engine/Imput.h"
 
 namespace Engine {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x,this,std::placeholders::_1)
+	Application* Application::s_Instance = nullptr;
 
 	Application::Application() 
 	{
+		EG_CORE_ASSERT(!s_Instance,"Application already exists!")
+		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window->SetEventCallback(EG_BIND_EVENT_FN(Application::OnEvent));
 	}
 
 	Application::~Application() 
@@ -21,19 +25,21 @@ namespace Engine {
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
-	void Application::PushOverlay(Layer* overlay)
+	void Application::PushOverlay(Layer* layer)
 	{
-		m_LayerStack.PushOverlay(overlay);
+		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowCloseEvent>(EG_BIND_EVENT_FN(Application::OnWindowClose));
 
-		EG_CORE_TRACE("{0}", e);
+		//EG_CORE_TRACE("{0}", e);
 
 		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 		{
