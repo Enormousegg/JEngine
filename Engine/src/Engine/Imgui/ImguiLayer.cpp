@@ -2,11 +2,11 @@
 #include "ImguiLayer.h"
 
 #include "imgui.h"
-#include "Platform/OpenGL/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_opengl3.h"
 
 #include "Engine/Application.h"
 
-#include "glfw3.h"
+#include "GLFW/glfw3.h"
 #include "glad/glad.h"
 
 namespace Engine {
