@@ -16,6 +16,9 @@ namespace Engine {
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(EG_BIND_EVENT_FN(Application::OnEvent));
+
+		m_ImguiLayer = new ImguiLayer();
+		PushOverlay(m_ImguiLayer);
 	}
 
 	Application::~Application() 
@@ -58,6 +61,11 @@ namespace Engine {
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
+			m_ImguiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+				layer->OnImguiRender();
+			m_ImguiLayer->End();
 
 			m_Window->OnUpdate();
 		}

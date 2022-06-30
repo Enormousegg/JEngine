@@ -23,9 +23,10 @@ include "Engine/vendor/Imgui"
 
 project "Engine"
 	location "Engine"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir("bin/" ..outputdir.."/%{prj.name}")
 	objdir("bin-int/" ..outputdir.."/%{prj.name}")
@@ -65,22 +66,22 @@ project "Engine"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "10.0.19041.0"
 
 		defines--预处理命令
 		{
 			"EG_PLATFORM_WINDOWS",
 			"EG_BUILD_DLL",
-			"GLFW_INCLUDE_NONE"
+			"GLFW_INCLUDE_NONE",
+			"_CRT_SECURE_NO_WARNINGS"--去除scanf警告
 		}
 
 		--生成的dll文件复制到Sandbox
-		postbuildcommands
-		{
-			"{COPY} %{cfg.buildtarget.relpath} \"../bin/"..outputdir.."/Sandbox/\""
+		--postbuildcommands
+		--{
+			--"{COPY} %{cfg.buildtarget.relpath} \"../bin/"..outputdir.."/Sandbox/\""
 			--"{COPY} %{cfg.buildtarget.relpath} ../bin/"..outputdir.."/Sandbox"
-		}
+		--}
 
 	filter "configurations:Debug"
 		defines "EG_DEBUG"
@@ -104,7 +105,8 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleAPP"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir("bin/" ..outputdir.."/%{prj.name}")
 	objdir("bin-int/" ..outputdir.."/%{prj.name}")
@@ -119,6 +121,7 @@ project "Sandbox"
 	{
 		"Engine/vendor/spdlog/include",
 		"Engine/src",
+		"Engine/vendor",
 		"%{IncludeDir.glm}"
 	}
 
@@ -128,7 +131,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "10.0.19041.0"
 
 		defines--预处理命令

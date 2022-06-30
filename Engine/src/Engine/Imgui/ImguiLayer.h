@@ -13,10 +13,12 @@ namespace Engine {
 		ImguiLayer();
 		~ImguiLayer();
 
-		void OnAttach();
-		void OnDetach();
-		void OnUpdate();
+		virtual void OnAttach()override;
+		virtual void OnDetach()override;
+		virtual void OnImguiRender()override;
 
+		void Begin();
+		void End();
 	private:
 		float m_Time = 0.0f;
 	};

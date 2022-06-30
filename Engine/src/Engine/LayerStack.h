@@ -24,7 +24,7 @@ namespace Engine {
 		std::vector<Layer*>::reverse_iterator rend() { return m_Layers.rend(); }
 	private:
 		std::vector<Layer*> m_Layers;
-		std::vector<Layer*>::iterator m_LayerInsert;
+		unsigned int m_LayerInsertIndex;
 	};
 
 }
