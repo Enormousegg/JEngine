@@ -18,6 +18,7 @@ IncludeDir["Glad"] = "Engine/vendor/Glad/include"
 IncludeDir["Imgui"] = "Engine/vendor/Imgui"
 IncludeDir["glm"] = "Engine/vendor/glm"
 
+include "Engine/vendor/GLFW"
 include "Engine/vendor/Glad"
 include "Engine/vendor/Imgui"
 
@@ -52,27 +53,27 @@ project "Engine"
 		"%{IncludeDir.glm}"
 	}
 
-	libdirs
-	{
-		"Engine/vendor/GLFW/lib"
-	}
+	--libdirs
+	--{
+		--"%{prj.name}/vendor/GLFW/lib"
+	--}
 
 	links
 	{	
-		"glfw3_mt.lib",
 		"Glad",
 		"Imgui",
-		"opengl32.lib"
+		"opengl32.lib",
+		"GLFW"
 	}
 
 	filter "system:windows"
-		systemversion "10.0.19041.0"
+		systemversion "latest"
 
 		defines--预处理命令
 		{
 			"EG_PLATFORM_WINDOWS",
 			"EG_BUILD_DLL",
-			"GLFW_INCLUDE_NONE",
+			"GLFW_INCLUDE_NONE",--防止重复包含
 			"_CRT_SECURE_NO_WARNINGS"--去除scanf警告
 		}
 
@@ -89,17 +90,20 @@ project "Engine"
 		--buildoptions "/MDd"
 		symbols "on"
 
+
 	filter "configurations:Release"
 		defines "EG_Release"
 		runtime "Release"
 		--buildoptions "/MD"
 		optimize "on"
 
+
 	filter "configurations:Dist"
 		defines "EG_Dist"
 		runtime "Release"
 		--buildoptions "/MD"
 		optimize "on"
+
 
 project "Sandbox"
 	location "Sandbox"
@@ -131,7 +135,7 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		systemversion "10.0.19041.0"
+		systemversion "latest"
 
 		defines--预处理命令
 		{
