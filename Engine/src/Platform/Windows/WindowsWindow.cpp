@@ -5,6 +5,8 @@
 #include "Engine/Events/KeyEvent.h"
 #include "Engine/Events/MouseEvent.h"
 
+#include "Platform/OpenGL/OpenGLContext.h"
+
 #include "glad/glad.h"
 
 namespace Engine {
@@ -49,6 +51,10 @@ namespace Engine {
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
+
 		glfwMakeContextCurrent(m_Window);//ÏÔÊ¾´°¿Ú
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		EG_CORE_ASSERT(status, "Failed to initialize GLAD");
@@ -153,7 +159,7 @@ namespace Engine {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffer();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

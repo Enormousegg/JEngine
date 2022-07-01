@@ -129,6 +129,11 @@ project "Sandbox"
 		"%{IncludeDir.glm}"
 	}
 
+	--disablewarnings 
+	--{ 
+		--"Engine/vendor/spdlog/include" 
+	--}
+
 	links
 	{	
 		"Engine"
