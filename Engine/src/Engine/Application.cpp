@@ -1,37 +1,20 @@
 #include "egpch.h"
-
 #include "Application.h"
-#include "Events/ApplicationEvent.h"
-#include <glad/glad.h>
+
+#include "Engine/Log.h"
+
+#include "Engine/Renderer/Renderer.h"
 
 #include "Engine/Imput.h"
 
 namespace Engine {
 
+#define EG_BIND_EVENT_FN(fn) std::bind(&fn,this,std::placeholders::_1)
+
 	Application* Application::s_Instance = nullptr;
 
-	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-	{
-		switch (type)
-		{
-			case ShaderDataType::Float:		return GL_FLOAT;
-			case ShaderDataType::Float2:	return GL_FLOAT;
-			case ShaderDataType::Float3:	return GL_FLOAT;
-			case ShaderDataType::Float4:	return GL_FLOAT;
-			case ShaderDataType::Mat3:		return GL_FLOAT;
-			case ShaderDataType::Mat4:		return GL_FLOAT;
-			case ShaderDataType::Int:		return GL_INT;
-			case ShaderDataType::Int2:		return GL_INT;
-			case ShaderDataType::Int3:		return GL_INT;
-			case ShaderDataType::Int4:		return GL_INT;
-			case ShaderDataType::Bool:		return GL_BOOL;
-		}
-
-		EG_CORE_ASSERT(false, "Unknown ShaderDataType!");
-		return 0;
-	}
-
 	Application::Application() 
+		:m_Camera(-1.6f,1.6f,-0.9f,0.9f)
 	{
 		EG_CORE_ASSERT(!s_Instance,"Application already exists!")
 		s_Instance = this;
@@ -93,6 +76,8 @@ namespace Engine {
 			layout(location=0) in vec3 a_Position;
 			layout(location=1) in vec4 a_Color;
 
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 			out vec4 v_Color;
 			
@@ -100,7 +85,7 @@ namespace Engine {
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position,1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position,1.0);
 			}
 		)";
 
@@ -126,12 +111,14 @@ namespace Engine {
 			
 			layout(location=0) in vec3 a_Position;
 
+			uniform mat4 u_ViewProjection;
+
 			out vec3 v_Position;
 			
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position,1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position,1.0);
 			}
 		)";
 
@@ -185,16 +172,20 @@ namespace Engine {
 	{
 		while (m_Running)
 		{
-			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+			RenderCommand::Clear();
 
-			m_Shader2->Bind();
-			m_SquareVA->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			m_Camera.SetPosition({ 0.5f,0.5f,0.0f });
+			m_Camera.SetRotation(45.0f);
 
-			m_Shader->Bind();
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::BeginScene(m_Camera);
+
+			Renderer::Submit(m_Shader2,m_SquareVA);
+			Renderer::Submit(m_Shader,m_VertexArray);
+
+			Renderer::EndScene();
+
+			//Renderer::Flush();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
