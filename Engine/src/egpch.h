@@ -8,12 +8,13 @@
 
 #include <sstream>
 #include <string>
+#include <array>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
 #include <queue>
 
-#include "Engine/Log.h"
+#include "Engine/Core/Log.h"
 
 #ifdef EG_PLATFORM_WINDOWS
 #include <Windows.h>

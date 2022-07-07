@@ -68,7 +68,7 @@ namespace Engine {
 				data.Width = width;
 				data.Height = height;
 
-				WindowResizeEvent event(width, height);
+				WindowResizedEvent event(width, height);
 				data.EventCallback(event);//事件回调函数
 			});
 

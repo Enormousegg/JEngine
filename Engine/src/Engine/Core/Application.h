@@ -2,18 +2,14 @@
 
 #include "core.h"
 
-#include "Engine/LayerStack.h"
-#include "Events/Event.h"
+#include "Engine/Core/LayerStack.h"
+#include "Engine/Events/Event.h"
 #include "Window.h"
-#include "Events/ApplicationEvent.h"
+#include "Engine/Events/ApplicationEvent.h"
+
+#include "Engine/Core/TimeStep.h"
 
 #include "Engine/Imgui/ImguiLayer.h"
-
-#include "Engine/Renderer/Shader.h"
-#include "Engine/Renderer/Buffer.h"
-#include "Engine/Renderer/VertexArray.h"
-
-#include "Engine/Renderer/OrthographicCamera.h"
 
 namespace Engine {
 	
@@ -34,20 +30,14 @@ namespace Engine {
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
-
+		bool OnWindowResized(WindowResizedEvent& e);
+	private:
 		std::unique_ptr<Window> m_Window;
 		ImguiLayer* m_ImguiLayer;
-		//std::unique_ptr<ImguiLayer> m_ImguiLayer;
 		bool m_Running = true;
+		bool m_Minimized = false;
 		LayerStack m_LayerStack;
-
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-
-		std::shared_ptr<Shader> m_Shader2;
-		std::shared_ptr<VertexArray> m_SquareVA;
-
-		OrthographicCamera m_Camera;
+		float m_LatsFrameTime = 0.0f;
 	private:
 		static Application* s_Instance;
 	};

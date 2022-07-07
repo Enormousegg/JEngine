@@ -5,10 +5,10 @@
 
 namespace Engine {
 
-	class EG_API WindowResizeEvent : public Event
+	class WindowResizedEvent : public Event
 	{
 	public:
-		WindowResizeEvent(unsigned int width, unsigned int height)
+		WindowResizedEvent(unsigned int width, unsigned int height)
 			:m_Width(width), m_Height(height) {}
 		
 		inline unsigned int GetWidth()const { return m_Width; }
