@@ -31,16 +31,19 @@ namespace Engine {
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
 		if (it != m_Layers.end())
 		{
+			layer->OnDetach();
 			m_Layers.erase(it);
 			--m_LayerInsertIndex;
 		}
 	}
 
-	void LayerStack::PopOverlay(Layer* overlay)
+	void LayerStack::PopOverlay(Layer* overlayer)
 	{
-		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
-		if (it != m_Layers.end())
+		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlayer);
+		if (it != m_Layers.end()) {
+			overlayer->OnDetach();
 			m_Layers.erase(it);
+		}
 	}
 
 }

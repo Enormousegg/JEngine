@@ -1,4 +1,5 @@
 #include <Engine.h>
+#include <Engine/Core/EntryPoint.h>
 
 #include "imgui/imgui.h"
 
@@ -7,13 +8,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Sandbox2D.h"
+
 class ExampleLayer : public Engine::Layer
 {
 public:
 	ExampleLayer()
 		:Layer("Example"),m_CameraController(1280.0f/720.0f)
 	{
-		m_VertexArray.reset(Engine::VertexArray::Create());
+		m_VertexArray = Engine::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f,-0.5f,0.0f, 1.0f,0.0f,1.0f,1.0f,
@@ -37,7 +40,7 @@ public:
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 
-		m_SquareVA.reset(Engine::VertexArray::Create());
+		m_SquareVA = Engine::VertexArray::Create();
 
 		float squareVertices[4 * 5] = {
 			-0.5f,-0.5f,0.0f,0.0f,0.0f,
@@ -127,10 +130,10 @@ public:
 		)";
 		m_FlatColorShader = Engine::Shader::Create("FlatColor", FlatColorVertexSrc, FlatColorFragmentSrc);
 
-		auto textureShader = m_ShaderLibrary.Load("asserts/shaders/Texture.glsl");
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
-		m_Texture = (Engine::Texture2D::Create("asserts/Checkerboard.png"));
-		m_LogoTexture = (Engine::Texture2D::Create("asserts/Logo.png"));
+		m_Texture = (Engine::Texture2D::Create("assets/textures/Checkerboard.png"));
+		m_LogoTexture = (Engine::Texture2D::Create("assets/textures/Logo.png"));
 
 		std::dynamic_pointer_cast<Engine::OpenGLShader>(textureShader)->Bind();
 		std::dynamic_pointer_cast<Engine::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
@@ -215,7 +218,8 @@ class Sandbox :public Engine::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()
