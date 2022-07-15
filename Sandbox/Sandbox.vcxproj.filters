@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="SmallGame">
+      <UniqueIdentifier>{38EB057D-A455-BAF3-ED93-6B99593D9848}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Sandbox2D.h" />
+    <ClInclude Include="src\SmallGame\Color.h">
+      <Filter>SmallGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SmallGame\GameLayer.h">
+      <Filter>SmallGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SmallGame\Level.h">
+      <Filter>SmallGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SmallGame\ParticleSystem.h">
+      <Filter>SmallGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SmallGame\Player.h">
+      <Filter>SmallGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SmallGame\Random.h">
+      <Filter>SmallGame</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\SanBoxApp.cpp" />
+    <ClCompile Include="src\Sandbox2D.cpp" />
+    <ClCompile Include="src\SmallGame\GameLayer.cpp">
+      <Filter>SmallGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SmallGame\Level.cpp">
+      <Filter>SmallGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SmallGame\ParticleSystem.cpp">
+      <Filter>SmallGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SmallGame\Player.cpp">
+      <Filter>SmallGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SmallGame\Random.cpp">
+      <Filter>SmallGame</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
