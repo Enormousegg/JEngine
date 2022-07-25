@@ -26,8 +26,7 @@ public:
 			 0.0f, 0.5f,0.0f, 1.0f,0.0f,1.0f,1.0f
 		};
 
-		Engine::Ref<Engine::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Engine::VertexBuffer::Create(vertices, sizeof(vertices)));
+		Engine::Ref<Engine::VertexBuffer> vertexBuffer = Engine::VertexBuffer::Create(vertices, sizeof(vertices));
 		Engine::BufferLayout layout = {
 			{ Engine::ShaderDataType::Float3,"a_Position"},
 			{ Engine::ShaderDataType::Float4,"a_Color"}
@@ -37,8 +36,7 @@ public:
 
 
 		uint32_t indices[3] = { 0,1,2 };
-		Engine::Ref<Engine::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Engine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		Engine::Ref<Engine::IndexBuffer> indexBuffer = Engine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 
@@ -51,8 +49,7 @@ public:
 			-0.5f, 0.5f,0.0f,0.0f,1.0f
 		};
 
-		Engine::Ref<Engine::VertexBuffer> squareVB;
-		squareVB.reset(Engine::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		Engine::Ref<Engine::VertexBuffer> squareVB = Engine::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ Engine::ShaderDataType::Float3,"a_Position"},
 			{ Engine::ShaderDataType::Float2,"a_TexCoord"}
@@ -60,8 +57,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0,1,2,2,3,0 };
-		Engine::Ref<Engine::IndexBuffer> squareIB;
-		squareIB.reset(Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		Engine::Ref<Engine::IndexBuffer> squareIB = Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 
@@ -221,8 +217,8 @@ public:
 	Sandbox()
 	{
 		//PushLayer(new ExampleLayer());
-		//PushLayer(new Sandbox2D());
-		PushLayer(new GameLayer());
+		PushLayer(new Sandbox2D());
+		//PushLayer(new GameLayer());
 	}
 
 	~Sandbox()

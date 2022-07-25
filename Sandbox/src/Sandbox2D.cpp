@@ -41,9 +41,11 @@ void Sandbox2D::OnUpdate(Engine::TimeStep ts)
 		EG_PROFILE_SCOPE("Renderer Draw");
 
 		Engine::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		Engine::Renderer2D::DrawRotateQuad({ -1.0f,0.0f }, { 0.8f, 0.8f }, glm::radians(45.0f), glm::vec4(0.8f, 0.2f, 0.3f, 1.0f));
+		//Engine::Renderer2D::DrawRotateQuad({ -1.0f,0.0f }, { 0.8f, 0.8f }, glm::radians(45.0f), glm::vec4(0.8f, 0.2f, 0.3f, 1.0f));
+		Engine::Renderer2D::DrawQuad({ -1.0f,0.0f }, { 0.8f, 0.8f }, glm::vec4(0.8f, 0.2f, 0.3f, 1.0f));
 		Engine::Renderer2D::DrawQuad({ 0.5f,-0.5f }, { 0.5f, 0.75f }, glm::vec4(0.2f, 0.3f, 0.8f, 1.0f));//为何此处无法用初始化列表进行初始化
-		Engine::Renderer2D::DrawQuad({ 0.0f,0.0f,-0.1f }, { 10.0f, 10.0f }, m_Checkerboardtexture,10.0f);
+		Engine::Renderer2D::DrawQuad({ -5.0f,-5.0f,-0.2f }, { 10.0f, 10.0f }, m_Checkerboardtexture, 10.0f);
+		Engine::Renderer2D::DrawQuad({ -0.5f,-0.5f,-0.1f }, { 10.0f, 10.0f }, m_Checkerboardtexture, 20.0f);
 		Engine::Renderer2D::EndScene();
 	}
 }
