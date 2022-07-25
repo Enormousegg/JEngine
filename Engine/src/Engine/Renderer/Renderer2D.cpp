@@ -202,8 +202,7 @@ namespace Engine {
 
 		float texIndex = 0.0f;
 
-		for (uint32_t i = 1; i < s_Data.TextureSlots.size(); ++i)
-		
+		for (uint32_t i = 1; i < s_Data.TextureSlots.size(); ++i){
 			//是否上传纹理
 			if (s_Data.TextureSlots[i]) {
 				if (*s_Data.TextureSlots[i].get() == *texture.get())//智能指针取出裸指针，运用重载的==判断是否相等
