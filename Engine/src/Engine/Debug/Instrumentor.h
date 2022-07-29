@@ -125,7 +125,7 @@ namespace Engine {
 
 }
 
-#define EG_PROFILE 1
+#define EG_PROFILE 0
 #if EG_PROFILE
 	#define EG_PROFILE_BEGIN_SESSION(name, filepath) ::Engine::Instrumentor::Get().BeginSession(name, filepath)//::此处为全局变量声明符号
 	#define EG_PROFILE_END_SESSION() ::Engine::Instrumentor::Get().EndSession()
