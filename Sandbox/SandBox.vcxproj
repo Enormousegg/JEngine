@@ -131,30 +131,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ParticleSystem\ParticleSystem.h" />
     <ClInclude Include="src\Sandbox2D.h" />
-    <ClInclude Include="src\SmallGame\Color.h" />
-    <ClInclude Include="src\SmallGame\GameLayer.h" />
-    <ClInclude Include="src\SmallGame\Level.h" />
-    <ClInclude Include="src\SmallGame\ParticleSystem.h" />
-    <ClInclude Include="src\SmallGame\Player.h" />
-    <ClInclude Include="src\SmallGame\Random.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ParticleSystem\ParticleSystem.cpp" />
     <ClCompile Include="src\SanBoxApp.cpp" />
     <ClCompile Include="src\Sandbox2D.cpp" />
-    <ClCompile Include="src\SmallGame\GameLayer.cpp" />
-    <ClCompile Include="src\SmallGame\Level.cpp" />
-    <ClCompile Include="src\SmallGame\ParticleSystem.cpp" />
-    <ClCompile Include="src\SmallGame\Player.cpp" />
-    <ClCompile Include="src\SmallGame\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\SmallGameTexture.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

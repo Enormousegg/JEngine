@@ -16,10 +16,10 @@ class ParticleSystem
 public:
 	ParticleSystem();
 
-	void Emit(const ParticleProps& particleProps);
-
 	void OnUpdate(Engine::TimeStep ts);
-	void OnRender();
+	void OnRender(Engine::OrthographicCamera& camera);
+
+	void Emit(const ParticleProps& particleProps);
 private:
 	struct Particle
 	{
@@ -37,4 +37,3 @@ private:
 	std::vector<Particle> m_ParticlePool;
 	uint32_t m_PoolIndex = 999;
 };
-

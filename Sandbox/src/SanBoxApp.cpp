@@ -10,7 +10,7 @@
 
 #include "Sandbox2D.h"
 
-#include "SmallGame/GameLayer.h"
+//#include "SmallGame/GameLayer.h"
 
 class ExampleLayer : public Engine::Layer
 {
